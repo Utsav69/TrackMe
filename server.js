@@ -27,9 +27,19 @@ app.get('/register-device', (req,res) => {
 });
 
 app.get('send-command', (req,res) => {
-    res.sendFile('{base}/send-command.html');
+    res.sendFile('${base}/send-command.html');
 });
 
 app.get('/about', (req,res) => {
     res.sendFile('${base}/about-me.html');
 });
+
+app.get('/registration', (req,res) => {
+    res.sendFile('${base}/registration.html');
+});
+
+app.get('/login', (req,res) => {
+    res.sendFile('${base}/login.html');
+});
+
+const port = process.env.PORT || 3000;
