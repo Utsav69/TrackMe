@@ -36,3 +36,92 @@ app.get('/api/devices', (req, res) => {
    app.post('/api/devices', (req, res) => {
     console.log(req.body);
    });
+
+   require("path/to/user.js");
+
+
+
+return res.json({
+    success: true,
+    message: 'Authenticated successfully',
+    isAdmin: found.isAdmin
+});
+
+const newUser = new User({
+    name: user,
+    password,
+    isAdmin
+   });
+
+   newUser.save(err => {
+    return err
+    ? res.send(err)
+    : res.json({
+    success: true,
+    message: 'Created new user'
+    });
+   });
+
+   app.get('/api/devices/:deviceId/device-history', (req, res) => {
+    const { deviceId } = req.params;
+    Device.findOne({"_id": deviceId }, (err, devices) => {
+    const { sensorData } = devices;
+    return err
+    ? res.send(err)
+    : res.send(sensorData);
+    });
+   });
+
+
+
+app.use(express.static(`${__dirname}/public`));
+app.get('/docs', (req, res) => {
+ res.sendFile(`${__dirname}/public/generated-docs/index.html`);
+});
+
+app.get('/api/users/:user/devices', (req, res) => {
+    const { user } = req.params;
+    Device.find({ "user": user }, (err, devices) => {
+    return err
+    ? res.send(err)
+    : res.send(devices);
+    });
+   });
+
+
+
+/**
+* @api {get} /api/devices AllDevices An array of all devices
+* @apiGroup Device
+* @apiSuccessExample {json} Success-Response:
+2 / 3
+* [
+* {
+* "_id": "dsohsdohsdofhsofhosfhsofh",
+* "name": "Mary's iPhone",
+* "user": "mary",
+* "sensorData": [
+* {
+* "ts": "1529542230",
+* "temp": 12,
+* "loc": {
+* "lat": -37.84674,
+* "lon": 145.115113
+* }
+* },
+* {
+* "ts": "1529572230",
+* "temp": 17,
+* "loc": {
+* "lat": -37.850026,
+* "lon": 145.117683
+* }
+* }
+* ]
+* }
+* ]
+* @apiErrorExample {json} Error-Response:
+* {
+* "User does not exist"
+* }
+*/

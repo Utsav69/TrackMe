@@ -14,7 +14,7 @@
     </head>
     <body>
         <div class="Container">
-            <div id="newbar"></div>
+            <div id="navbar"></div>
 
             <h1>Register New Devices</h1>
 
@@ -40,3 +40,21 @@
         <script src="app.js"></script>
     </body>
 </html>
+
+app.post('/send-command', (req, res) => {
+    const { deviceId, command } = req.body;
+    const topic = `/command/${deviceId}`;
+    client.publish(topic, command, () => {
+    res.send('published new message');
+    });
+   });
+
+   client.publish(topic, command, () => {
+    res.send('published new message');
+   });
+
+   
+<div class="footer">
+    &copy; Copyright 2018.
+        
+</div>
